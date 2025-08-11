@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "pMrsLMFoVPeXqAGpv8Gph4v5xGER22tBb1KKJkLLSFYyEHIP6b53hfv21/BA+rk//bvQXguZolm88YCYtD2TJg==",
+  "success": true,
+  "projectFilePath": "/Users/dragon/Lab/Synapse Tech Assessment/Synapse.DMEOrders.csproj",
+  "expectedPackageFiles": [
+    "/Users/dragon/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/dragon/.nuget/packages/serilog/4.3.0/serilog.4.3.0.nupkg.sha512",
+    "/Users/dragon/.nuget/packages/serilog.sinks.console/6.0.0/serilog.sinks.console.6.0.0.nupkg.sha512",
+    "/Users/dragon/.nuget/packages/serilog.sinks.file/7.0.0/serilog.sinks.file.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

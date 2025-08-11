@@ -1,0 +1,6 @@
+2025-08-11 12:17:32.910 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:17:32.983 -04:00 [INF] Reading note body from file
+2025-08-11 12:17:32.984 -04:00 [ERR] Error processing physician note: Physician note file not found.
+System.IO.FileNotFoundException: Physician note file not found.
+   at Synapse.DMEOrders.NoteReader.Read(String fileName) in /Users/dragon/Lab/Synapse Tech Assessment/NoteReader.cs:line 23
+   at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 25
