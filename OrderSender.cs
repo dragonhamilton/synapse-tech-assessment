@@ -19,7 +19,8 @@ namespace Synapse.DMEOrders
             {
                 var url = "https://alert-api.com/DrExtract";
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                client.PostAsync(url, content).GetAwaiter().GetResult();
+                _logger.Information($"Sending order to API at {url}: {json}");
+                // client.PostAsync(url, content).GetAwaiter().GetResult();
             }
         }
     }

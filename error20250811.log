@@ -4,3 +4,110 @@
 System.IO.FileNotFoundException: Physician note file not found.
    at Synapse.DMEOrders.NoteReader.Read(String fileName) in /Users/dragon/Lab/Synapse Tech Assessment/NoteReader.cs:line 23
    at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 25
+2025-08-11 12:26:15.042 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:26:15.104 -04:00 [INF] Reading note body from file
+2025-08-11 12:26:15.105 -04:00 [ERR] Error processing physician note: Physician note file not found.
+System.IO.FileNotFoundException: Physician note file not found.
+   at Synapse.DMEOrders.NoteReader.Read(String fileName) in /Users/dragon/Lab/Synapse Tech Assessment/NoteReader.cs:line 23
+   at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 25
+2025-08-11 12:31:37.661 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:31:37.724 -04:00 [INF] Reading note body from file
+2025-08-11 12:31:37.725 -04:00 [INF] Reading file: physician_note.txt
+2025-08-11 12:31:37.728 -04:00 [ERR] Error processing physician note: Physician note file not found.
+System.IO.FileNotFoundException: Physician note file not found.
+   at Synapse.DMEOrders.NoteReader.Read(String fileName) in /Users/dragon/Lab/Synapse Tech Assessment/NoteReader.cs:line 23
+   at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 25
+2025-08-11 12:32:09.034 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:32:09.095 -04:00 [INF] Reading note body from file
+2025-08-11 12:32:09.096 -04:00 [INF] Reading file: physician_note.txt
+2025-08-11 12:32:09.099 -04:00 [ERR] Error processing physician note: Physician note file not found.
+System.IO.FileNotFoundException: Physician note file not found.
+   at Synapse.DMEOrders.NoteReader.Read(String fileName) in /Users/dragon/Lab/Synapse Tech Assessment/NoteReader.cs:line 23
+   at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 25
+2025-08-11 12:32:32.883 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:32:32.945 -04:00 [INF] Reading note body from file
+2025-08-11 12:32:32.946 -04:00 [INF] Reading file: physician_note1.txt
+2025-08-11 12:32:32.950 -04:00 [INF] Extracting order from note body
+2025-08-11 12:32:32.950 -04:00 [INF] Getting device info from note body
+2025-08-11 12:32:32.951 -04:00 [INF] Extracting ordering physician from note body
+2025-08-11 12:32:32.961 -04:00 [INF] Creating device info JSON
+2025-08-11 12:32:32.990 -04:00 [INF] Sending order to API
+2025-08-11 12:32:33.174 -04:00 [ERR] Error processing physician note: nodename nor servname provided, or not known (alert-api.com:443)
+System.Net.Http.HttpRequestException: nodename nor servname provided, or not known (alert-api.com:443)
+ ---> System.Net.Sockets.SocketException (0xFFFDFFFF): nodename nor servname provided, or not known
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|277_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(HttpRequestMessage request)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.GetHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at Synapse.DMEOrders.OrderSender.Send(String json) in /Users/dragon/Lab/Synapse Tech Assessment/OrderSender.cs:line 22
+   at Synapse.DMEOrders.DMEOrderExtractor.Main(String[] args) in /Users/dragon/Lab/Synapse Tech Assessment/DMEOrderExtractor.cs:line 33
+2025-08-11 12:34:17.493 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:34:17.555 -04:00 [INF] Reading note body from file
+2025-08-11 12:34:17.556 -04:00 [INF] Reading file: physician_note1.txt
+2025-08-11 12:34:17.560 -04:00 [INF] Extracting order from note body
+2025-08-11 12:34:17.561 -04:00 [INF] Getting device info from note body
+2025-08-11 12:34:17.561 -04:00 [INF] Extracting ordering physician from note body
+2025-08-11 12:34:17.571 -04:00 [INF] Creating device info JSON
+2025-08-11 12:34:17.595 -04:00 [INF] Sending order to API
+2025-08-11 12:34:17.626 -04:00 [INF] Sending order to API at https://alert-api.com/DrExtract: System.Net.Http.StringContent
+2025-08-11 12:34:39.476 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:34:39.539 -04:00 [INF] Reading note body from file
+2025-08-11 12:34:39.540 -04:00 [INF] Reading file: physician_note1.txt
+2025-08-11 12:34:39.543 -04:00 [INF] Extracting order from note body
+2025-08-11 12:34:39.544 -04:00 [INF] Getting device info from note body
+2025-08-11 12:34:39.544 -04:00 [INF] Extracting ordering physician from note body
+2025-08-11 12:34:39.555 -04:00 [INF] Creating device info JSON
+2025-08-11 12:34:39.583 -04:00 [INF] Sending order to API
+2025-08-11 12:34:39.618 -04:00 [INF] Sending order to API at https://alert-api.com/DrExtract: {
+  "device": "Oxygen Tank",
+  "mask_type": null,
+  "add_ons": null,
+  "qualifier": "",
+  "ordering_provider": "Dr. Cuddy",
+  "liters": "2 L",
+  "usage": "sleep and exertion"
+}
+2025-08-11 12:35:24.991 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 12:35:25.053 -04:00 [INF] Reading note body from file
+2025-08-11 12:35:25.054 -04:00 [INF] Reading file: physician_note2.txt
+2025-08-11 12:35:25.057 -04:00 [INF] Extracting order from note body
+2025-08-11 12:35:25.058 -04:00 [INF] Getting device info from note body
+2025-08-11 12:35:25.061 -04:00 [INF] Extracting ordering physician from note body
+2025-08-11 12:35:25.071 -04:00 [INF] Creating device info JSON
+2025-08-11 12:35:25.075 -04:00 [INF] Sending order to API
+2025-08-11 12:35:25.107 -04:00 [INF] Sending order to API at https://alert-api.com/DrExtract: {
+  "device": "CPAP",
+  "mask_type": "full face",
+  "add_ons": [
+    "humidifier"
+  ],
+  "qualifier": "",
+  "ordering_provider": "Dr. Foreman\\n\"\n}"
+}
+2025-08-11 13:24:54.858 -04:00 [INF] Starting DME Order Extraction
+2025-08-11 13:24:54.922 -04:00 [INF] Reading note body from file
+2025-08-11 13:24:54.923 -04:00 [INF] Reading file: physician_note2.txt
+2025-08-11 13:24:54.927 -04:00 [INF] Extracting order from note body
+2025-08-11 13:24:54.928 -04:00 [INF] Getting device info from note body
+2025-08-11 13:24:54.940 -04:00 [INF] Extracting ordering physician from note body
+2025-08-11 13:24:54.952 -04:00 [INF] Creating device info JSON
+2025-08-11 13:24:54.956 -04:00 [INF] Sending order to API
+2025-08-11 13:24:55.042 -04:00 [INF] Sending order to API at https://alert-api.com/DrExtract: {
+  "device": "CPAP",
+  "mask_type": "full face",
+  "add_ons": [
+    "humidifier"
+  ],
+  "qualifier": "",
+  "ordering_provider": "Dr. Foreman\\n\"\n}"
+}

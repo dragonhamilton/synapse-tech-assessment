@@ -13,11 +13,11 @@ namespace Synapse.DMEOrders
             _logger = logger;
         }
 
-        public string Read(string fileName = "physician_note.txt")
+        public string Read(string fileName)
         {
+            _logger.Information("Reading file: {FileName}", fileName);
             if (File.Exists(fileName))
             {
-                _logger.Information("Reading file: {FileName}", fileName);
                 return File.ReadAllText(fileName);
             }
             throw new FileNotFoundException("Physician note file not found.");
