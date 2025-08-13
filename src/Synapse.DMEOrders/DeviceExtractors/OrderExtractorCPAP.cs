@@ -7,9 +7,12 @@ namespace Synapse.DMEOrders
     {
         private const string FULL_FACE_MASK = "Full face mask";
         private const string HEATED_HUMIDIFIER = "heated humidifier";
-        private readonly string PROP_ADD_ONS = "add_ons";
-        private readonly string PROP_MASK_TYPE = "mask_type";
+        private const string PROP_ADD_ONS = "add_ons";
+        private const string PROP_MASK_TYPE = "mask_type";
         private const string PROP_RECOMMENDATION = "recommendation";
+        private const string DEFAULT_MASK = "standard";
+        private const string DEFAULT_ADDONS = "none";
+        private const string SENTENCE_JOIN = ". ";
         private readonly ILogger _logger;
 
         public OrderExtractorCPAP(ILogger logger)
@@ -24,20 +27,20 @@ namespace Synapse.DMEOrders
         {
             _logger.Information($"Extracting {DEVICE_NAME} order info");
 
-            Diagnosis = noteValues.ContainsKey(PROP_DIAGNOSIS) ? noteValues[PROP_DIAGNOSIS] : UNKNOWN;;
+            Diagnosis = noteValues.ContainsKey(PROP_DIAGNOSIS) ? noteValues[PROP_DIAGNOSIS] : UNKNOWN; ;
             OrderingPhysician = noteValues.ContainsKey(PROP_ORDERING_PROVIDER) ? noteValues[PROP_ORDERING_PROVIDER] : UNKNOWN;
             PatientName = noteValues.ContainsKey(PROP_PATIENT_NAME) ? noteValues[PROP_PATIENT_NAME] : UNKNOWN;
             DOB = noteValues.ContainsKey(PROP_DOB) ? noteValues[PROP_DOB] : UNKNOWN;
             string recommendation = noteValues.ContainsKey(PROP_RECOMMENDATION) ? noteValues[PROP_RECOMMENDATION] : string.Empty;
-            string combined = Diagnosis + ". " + recommendation;
+            string combined = Diagnosis + SENTENCE_JOIN + recommendation;
 
-            string maskType = "standard";
+            string maskType = DEFAULT_MASK;
             if (combined.Contains(FULL_FACE_MASK, StringComparison.InvariantCultureIgnoreCase))
             {
                 maskType = FULL_FACE_MASK;
             }
-            
-            string addOns = "none";
+
+            string addOns = DEFAULT_ADDONS;
             if (combined.Contains(HEATED_HUMIDIFIER, StringComparison.InvariantCultureIgnoreCase))
             {
                 addOns = HEATED_HUMIDIFIER;

@@ -7,9 +7,11 @@ namespace Synapse.DMEOrders
     public class OrderExtractorOxygenTank : OrderExtractorBase
     {
         private readonly ILogger _logger;
-    private readonly string PROP_LITERS = "liters";
-    private readonly string PROP_USAGE = "usage";
-    private readonly string PROP_ORDERING_PHYSICIAN = "ordering physician";
+        private const string PROP_LITERS = "liters";
+        private const string PROP_USAGE = "usage";
+        private const string PROP_ORDERING_PHYSICIAN = "ordering physician";
+        private const string LITERS_PATTERN = "(\\d+(\\.\\d+)?) ?L";
+        private const string LITERS_SUFFIX = " L";
         public OrderExtractorOxygenTank(ILogger logger)
         {
             DEVICE_NAME = "Oxygen Tank";
@@ -30,8 +32,8 @@ namespace Synapse.DMEOrders
 
             string liters = UNKNOWN;
 
-            Match litersMatch = Regex.Match(Prescription, "(\\d+(\\.\\d+)?) ?L", RegexOptions.IgnoreCase);
-            if (litersMatch.Success) liters = litersMatch.Groups[1].Value + " L";
+            Match litersMatch = Regex.Match(Prescription, LITERS_PATTERN, RegexOptions.IgnoreCase);
+            if (litersMatch.Success) liters = litersMatch.Groups[1].Value + LITERS_SUFFIX;
 
             string usage = noteValues.ContainsKey(PROP_USAGE) ? noteValues[PROP_USAGE] : UNKNOWN;
 

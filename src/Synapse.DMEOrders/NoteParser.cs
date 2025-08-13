@@ -10,6 +10,8 @@ namespace Synapse.DMEOrders
     {
         private readonly ILogger _logger;
 
+        private const string JSON_DATA_FIELD = "data";
+
         public NoteParser(ILogger logger)
         {
             _logger = logger;
@@ -67,7 +69,7 @@ namespace Synapse.DMEOrders
         private string[] ParseJsonNote(string noteBody)
         {
             System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(noteBody);
-            if (doc.RootElement.TryGetProperty("data", out System.Text.Json.JsonElement dataElement))
+            if (doc.RootElement.TryGetProperty(JSON_DATA_FIELD, out System.Text.Json.JsonElement dataElement))
             {
                 string data = dataElement.GetString() ?? string.Empty;
                 if (string.IsNullOrEmpty(data))

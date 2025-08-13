@@ -10,12 +10,12 @@ namespace Synapse.DMEOrders
         protected const string UNKNOWN = "Unknown";
         protected string DEVICE_NAME = UNKNOWN;
         protected string DEVICE_CODE = UNKNOWN;
-        protected readonly string PROP_DEVICE = "device";
-        protected readonly string PROP_DIAGNOSIS = "diagnosis";
-        protected readonly string PROP_PRESCRIPTION = "prescription";
-        protected readonly string PROP_ORDERING_PROVIDER = "ordering physician";
-        protected readonly string PROP_PATIENT_NAME = "patient name";
-        protected readonly string PROP_DOB = "dob";
+        protected const string PROP_DEVICE = "device";
+        protected const string PROP_DIAGNOSIS = "diagnosis";
+        protected const string PROP_PRESCRIPTION = "prescription";
+        protected const string PROP_ORDERING_PROVIDER = "ordering physician";
+        protected const string PROP_PATIENT_NAME = "patient name";
+        protected const string PROP_DOB = "dob";
 
         protected string _noteBody = String.Empty;
 
@@ -28,13 +28,13 @@ namespace Synapse.DMEOrders
         public bool CanHandle(string noteBody)
         {
             bool canHandle = noteBody.Contains(DEVICE_CODE, System.StringComparison.OrdinalIgnoreCase);
-            if(canHandle)
+            if (canHandle)
             {
                 _noteBody = noteBody;
             }
             return canHandle;
         }
-        
+
         protected Dictionary<string, string> ParseNoteToDictionary(string noteBody)
         {
             var dict = new Dictionary<string, string>();

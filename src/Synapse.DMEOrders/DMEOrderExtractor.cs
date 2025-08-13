@@ -9,20 +9,31 @@ namespace Synapse.DMEOrders
     /// </summary>
     class DMEOrderExtractor
     {
+        private const string LOG_START = "Starting DME Order Extraction";
+        private const string LOG_READING = "Reading note body from file";
+        private const string LOG_EXTRACTING = "Extracting device-specific order from note body";
+        private const string LOG_SENDING = "Sending order to API";
+        private const string ENV_NOTE_FILE = "DME_NOTE_FILE";
+        private const string DEFAULT_NOTE_FILE = "physician_note1.txt";
+        private const string LOG_FILE_NAME = "error.log";
         static int Main(string[] args)
         {
             // Configure Serilog
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("error.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            .WriteTo.Console()
+            .WriteTo.File(LOG_FILE_NAME, rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
-            Log.Information("Starting DME Order Extraction");
+            Log.Information(LOG_START);
             try
             {
-                Log.Information("Reading note body from file");
+                Log.Information(LOG_READING);
                 FileReader fileReader = new FileReader(Log.Logger);
-                string noteBody = fileReader.ReadFile("physician_note1.txt");
+                // Allow override via environment variable DME_NOTE_FILE, default to local sample file
+                var configuredPath = Environment.GetEnvironmentVariable(ENV_NOTE_FILE);
+                var notePath = string.IsNullOrWhiteSpace(configuredPath) ? DEFAULT_NOTE_FILE : configuredPath;
+                Log.Information($"Using note file path: {notePath}");
+                string noteBody = fileReader.ReadFile(notePath);
                 Log.Information(noteBody);
 
                 List<OrderExtractorBase> extractors = new List<OrderExtractorBase>
@@ -32,11 +43,11 @@ namespace Synapse.DMEOrders
                     new OrderExtractorWheelchair(Log.Logger)
                 };
 
-                Log.Information("Extracting device-specific order from note body");
+                Log.Information(LOG_EXTRACTING);
                 OrderExtractorManager extractManager = new OrderExtractorManager(extractors, Log.Logger);
                 JObject orderInfo = extractManager.Extract(noteBody);
 
-                Log.Information("Sending order to API");
+                Log.Information(LOG_SENDING);
                 OrderSender sender = new OrderSender(Log.Logger);
                 sender.Send(orderInfo.ToString());
             }
