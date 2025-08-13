@@ -1,0 +1,22 @@
+# .NET build artifacts
+bin/
+obj/
+out/
+TestResults/
+*.coverage
+*.coveragexml
+
+# User-specific files
+*.user
+*.suo
+*.csproj.user
+*.cache
+
+# IDE settings
+.vscode/
+.idea/
+*.sln.DotSettings.user
+
+# Logs and misc
+*.log
+.DS_Store
