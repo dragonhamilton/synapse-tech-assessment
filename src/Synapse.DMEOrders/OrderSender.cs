@@ -2,13 +2,13 @@ using System.Net.Http;
 using System.Text;
 using Serilog;
 using System;
+using System.IO;
 
 namespace Synapse.DMEOrders
 {
     public class OrderSender
     {
         private readonly ILogger _logger;
-        private const string ENDPOINT_URL = "https://alert-api.com/DrExtract";
         private const string CONTENT_TYPE = "application/json";
         private const string LOG_SENDING = "Sending order to API at {Url}: {Json}";
         private const string LOG_SUCCESS = "Order sent successfully with status {StatusCode}";
@@ -16,9 +16,8 @@ namespace Synapse.DMEOrders
         private const string LOG_HTTP_ERROR = "HTTP error while sending order: {Message}";
         private const string LOG_TIMEOUT = "Timed out sending order to API";
         private const string LOG_UNEXPECTED = "Unexpected error while sending order: {Message}";
-        private const string LOG_SKIPPING = "Skipping API call to API at {Url}: {Json}(SEND_ORDERS not enabled)";
-        private const int HTTP_TIMEOUT_SECONDS = 10;
-        private const string ENV_SEND_ORDERS = "SEND_ORDERS";
+    private const string LOG_SKIPPING = "Skipping API call to API at {Url}: {Json} (SendOrders disabled)";
+    private const int HTTP_TIMEOUT_SECONDS = 10;
 
         public OrderSender(ILogger logger)
         {
@@ -36,12 +35,30 @@ namespace Synapse.DMEOrders
 
         public void Send(string json)
         {
-            var url = ENDPOINT_URL;
-
-            var sendFlag = Environment.GetEnvironmentVariable(ENV_SEND_ORDERS);
-            bool shouldSend = string.Equals(sendFlag, "1", StringComparison.OrdinalIgnoreCase)
-                              || string.Equals(sendFlag, "true", StringComparison.OrdinalIgnoreCase)
-                              || string.Equals(sendFlag, "yes", StringComparison.OrdinalIgnoreCase);
+            var url = "";
+            bool shouldSend = false;
+            try
+            {
+                var settingsPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+                if (File.Exists(settingsPath))
+                {
+                    var jsonText = File.ReadAllText(settingsPath);
+                    using var doc = System.Text.Json.JsonDocument.Parse(jsonText);
+                    if (doc.RootElement.TryGetProperty("ApiUrl", out var apiProp))
+                    {
+                        var configured = apiProp.GetString();
+                        if (!string.IsNullOrWhiteSpace(configured)) url = configured!;
+                    }
+                    if (doc.RootElement.TryGetProperty("SendOrders", out var sendProp))
+                    {
+                        shouldSend = sendProp.GetBoolean();
+                    }
+                }
+            }
+            catch
+            {
+                throw new Exception("API Endpoint is not configured correctly.");
+            }
             if (!shouldSend)
             {
                 _logger.Information(LOG_SKIPPING, url, json);
