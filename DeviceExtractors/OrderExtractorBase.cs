@@ -8,8 +8,8 @@ namespace Synapse.DMEOrders
     {
         public abstract JObject Extract(Dictionary<string, string> noteValues);
         protected const string UNKNOWN = "Unknown";
-        protected string DEVICE_NAME;
-        protected string DEVICE_CODE;
+        protected string DEVICE_NAME = UNKNOWN;
+        protected string DEVICE_CODE = UNKNOWN;
         protected readonly string PROP_DEVICE = "device";
         protected readonly string PROP_DIAGNOSIS = "diagnosis";
         protected readonly string PROP_PRESCRIPTION = "prescription";
@@ -17,13 +17,13 @@ namespace Synapse.DMEOrders
         protected readonly string PROP_PATIENT_NAME = "patient name";
         protected readonly string PROP_DOB = "dob";
 
-        protected string _noteBody;
+        protected string _noteBody = String.Empty;
 
-        protected string Diagnosis;
-        protected string Prescription;
-        protected string OrderingPhysician;
-        protected string PatientName;
-        protected string DOB;
+        protected string Diagnosis = UNKNOWN;
+        protected string Prescription = UNKNOWN;
+        protected string OrderingPhysician = UNKNOWN;
+        protected string PatientName = UNKNOWN;
+        protected string DOB = UNKNOWN;
 
         public bool CanHandle(string noteBody)
         {

@@ -69,14 +69,14 @@ namespace Synapse.DMEOrders
             System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(noteBody);
             if (doc.RootElement.TryGetProperty("data", out System.Text.Json.JsonElement dataElement))
             {
-                string data = dataElement.GetString();
-                if (!string.IsNullOrEmpty(data))
+                string data = dataElement.GetString() ?? string.Empty;
+                if (string.IsNullOrEmpty(data))
                 {
-                    return data.Split('\n');
+                    throw new JsonException("The note is not formatted properly, the data field can't be parsed.");
                 }
                 else
                 {
-                    throw new JsonException("The note is not formatted properly, the data field can't be parsed.");
+                    return data.Split('\n');
                 }
             }
             else
