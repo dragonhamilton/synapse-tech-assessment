@@ -88,7 +88,6 @@ Note: The app reads the sample note file bundled in src/Synapse.DMEOrders/physic
 
 You can override the note file path using an environment variable:
 ```bash
-export DME_NOTE_FILE="/absolute/path/to/your_note.txt"
 dotnet run --project src/Synapse.DMEOrders
 ```
 

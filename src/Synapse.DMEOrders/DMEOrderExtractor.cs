@@ -1,6 +1,8 @@
 using System;
 using Newtonsoft.Json.Linq;
 using Serilog;
+using System.IO;
+using System.Text.Json;
 
 namespace Synapse.DMEOrders
 {
@@ -29,9 +31,25 @@ namespace Synapse.DMEOrders
             {
                 Log.Information(LOG_READING);
                 FileReader fileReader = new FileReader(Log.Logger);
-                // Allow override via environment variable DME_NOTE_FILE, default to local sample file
-                var configuredPath = Environment.GetEnvironmentVariable(ENV_NOTE_FILE);
-                var notePath = string.IsNullOrWhiteSpace(configuredPath) ? DEFAULT_NOTE_FILE : configuredPath;
+                // Load from appsettings.json; fallback to DEFAULT_NOTE_FILE if missing
+                string notePath = DEFAULT_NOTE_FILE;
+                var settingsPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+                if (File.Exists(settingsPath))
+                {
+                    try
+                    {
+                        using var doc = JsonDocument.Parse(File.ReadAllText(settingsPath));
+                        if (doc.RootElement.TryGetProperty("NoteFilePath", out var prop))
+                        {
+                            var fromFile = prop.GetString();
+                            if (!string.IsNullOrWhiteSpace(fromFile)) notePath = fromFile!;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warning(ex, "Failed to read appsettings.json; using default note path");
+                    }
+                }
                 Log.Information($"Using note file path: {notePath}");
                 string noteBody = fileReader.ReadFile(notePath);
                 Log.Information(noteBody);
