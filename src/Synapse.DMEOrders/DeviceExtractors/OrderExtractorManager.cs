@@ -9,14 +9,21 @@ namespace Synapse.DMEOrders
         private readonly List<OrderExtractorBase> _extractors;
         private readonly ILogger _logger;
 
-        public OrderExtractorManager(IEnumerable<OrderExtractorBase> extractors, ILogger logger)
+        public OrderExtractorManager(ILogger logger)
         {
-            _extractors = new List<OrderExtractorBase>(extractors);
             _logger = logger;
+
+            _extractors = new List<OrderExtractorBase>
+            {
+                new OrderExtractorCPAP(_logger),
+                new OrderExtractorOxygenTank(_logger),
+                new OrderExtractorWheelchair(_logger)
+            };
         }
 
         public JObject Extract(string noteBody)
         {
+
             foreach (var extractor in _extractors)
             {
                 if (extractor.CanHandle(noteBody))

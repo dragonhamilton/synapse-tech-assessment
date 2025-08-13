@@ -54,15 +54,8 @@ namespace Synapse.DMEOrders
                 string noteBody = fileReader.ReadFile(notePath);
                 Log.Information(noteBody);
 
-                List<OrderExtractorBase> extractors = new List<OrderExtractorBase>
-                {
-                    new OrderExtractorCPAP(Log.Logger),
-                    new OrderExtractorOxygenTank(Log.Logger),
-                    new OrderExtractorWheelchair(Log.Logger)
-                };
-
                 Log.Information(LOG_EXTRACTING);
-                OrderExtractorManager extractManager = new OrderExtractorManager(extractors, Log.Logger);
+                OrderExtractorManager extractManager = new OrderExtractorManager(Log.Logger);
                 JObject orderInfo = extractManager.Extract(noteBody);
 
                 Log.Information(LOG_SENDING);
