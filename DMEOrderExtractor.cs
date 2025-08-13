@@ -21,15 +21,23 @@ namespace Synapse.DMEOrders
             try
             {
                 Log.Information("Reading note body from file");
-                var noteReader = new NoteReader(Log.Logger);
-                string noteBody = noteReader.Read("physician_note2.txt");
+                FileReader fileReader = new FileReader(Log.Logger);
+                string noteBody = fileReader.ReadFile("physician_note2.txt");
+                Log.Information(noteBody);
 
-                Log.Information("Extracting order from note body");
-                var extractor = new OrderInfoExtractor(Log.Logger);
-                JObject orderInfo = extractor.Extract(noteBody);
+                List<OrderExtractorBase> extractors = new List<OrderExtractorBase>
+                {
+                    new OrderExtractorCPAP(Log.Logger),
+                    new OrderExtractorOxygenTank(Log.Logger),
+                    new OrderExtractorWheelchair(Log.Logger)
+                };
+
+                Log.Information("Extracting device-specific order from note body");
+                OrderExtractorManager extractManager = new OrderExtractorManager(extractors, Log.Logger);
+                JObject orderInfo = extractManager.Extract(noteBody);
 
                 Log.Information("Sending order to API");
-                var sender = new OrderSender(Log.Logger);
+                OrderSender sender = new OrderSender(Log.Logger);
                 sender.Send(orderInfo.ToString());
             }
             catch (Exception ex)
