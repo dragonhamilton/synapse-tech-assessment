@@ -2,7 +2,7 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.DMEOrders", "Synapse.DMEOrders.csproj", "{7BB9D6B4-9DC0-28F7-32F3-F89A91DDA1DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.DMEOrders", "src/Synapse.DMEOrders/Synapse.DMEOrders.csproj", "{7BB9D6B4-9DC0-28F7-32F3-F89A91DDA1DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synapse.DMEOrders.Tests", "..\Synapse.DMEOrders.Tests\Synapse.DMEOrders.Tests.csproj", "{0EDEA237-FCE6-4438-912E-0B9C5386F077}"
 EndProject
