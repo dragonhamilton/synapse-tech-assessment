@@ -16,8 +16,8 @@ namespace Synapse.DMEOrders
         private const string LOG_HTTP_ERROR = "HTTP error while sending order: {Message}";
         private const string LOG_TIMEOUT = "Timed out sending order to API";
         private const string LOG_UNEXPECTED = "Unexpected error while sending order: {Message}";
-    private const string LOG_SKIPPING = "Skipping API call to API at {Url}: {Json} (SendOrders disabled)";
-    private const int HTTP_TIMEOUT_SECONDS = 10;
+        private const string LOG_SKIPPING = "Skipping API call to API at {Url}: {Json} (SendOrders disabled)";
+        private const int HTTP_TIMEOUT_SECONDS = 10;
 
         public OrderSender(ILogger logger)
         {
