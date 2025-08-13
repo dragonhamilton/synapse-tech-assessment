@@ -22,7 +22,7 @@ namespace Synapse.DMEOrders
             {
                 Log.Information("Reading note body from file");
                 FileReader fileReader = new FileReader(Log.Logger);
-                string noteBody = fileReader.ReadFile("physician_note2.txt");
+                string noteBody = fileReader.ReadFile("physician_note1.txt");
                 Log.Information(noteBody);
 
                 List<OrderExtractorBase> extractors = new List<OrderExtractorBase>

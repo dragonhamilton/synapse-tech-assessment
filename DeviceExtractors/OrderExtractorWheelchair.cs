@@ -18,10 +18,10 @@ namespace Synapse.DMEOrders
 
         public override JObject Extract(Dictionary<string, string> noteValues)
         {
-            Diagnosis = noteValues.ContainsKey(PROP_DIAGNOSIS) ? noteValues[PROP_DIAGNOSIS] : "Unknown";
-            OrderingPhysician = noteValues.ContainsKey(PROP_ORDERING_PROVIDER) ? noteValues[PROP_ORDERING_PROVIDER] : "Unknown";
-            PatientName = noteValues.ContainsKey(PROP_PATIENT_NAME) ? noteValues[PROP_PATIENT_NAME] : "Unknown";
-            DOB = noteValues.ContainsKey(PROP_DOB) ? noteValues[PROP_DOB] : "Unknown";
+            Diagnosis = noteValues.ContainsKey(PROP_DIAGNOSIS) ? noteValues[PROP_DIAGNOSIS] : UNKNOWN;
+            OrderingPhysician = noteValues.ContainsKey(PROP_ORDERING_PROVIDER) ? noteValues[PROP_ORDERING_PROVIDER] : UNKNOWN;
+            PatientName = noteValues.ContainsKey(PROP_PATIENT_NAME) ? noteValues[PROP_PATIENT_NAME] : UNKNOWN;
+            DOB = noteValues.ContainsKey(PROP_DOB) ? noteValues[PROP_DOB] : UNKNOWN;
 
             _logger.Information($"Extracting {DEVICE_NAME} order info");
             return new JObject
