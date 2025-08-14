@@ -27,7 +27,7 @@ Run the app
 ```bash
 dotnet run --project src/Synapse.DMEOrders
 ```
-Note: The app reads the note file from appsettings.json. THe code could easily be changed to loopo through the files in the configured directory.
+Note: The app reads the note file from appsettings.json. THe code could easily be changed to loop through the files in the configured directory.
 
 
 ## Tools used
@@ -40,6 +40,15 @@ Note: The app reads the note file from appsettings.json. THe code could easily b
 ## AI tools used
 
 - GitHub Copilot
+  - Prototyped unit tests
+  - Investigated the more arcane bugs
+  - Refactored variable names
+  - Replaced magic strings with variables
+  - Base documentation
+  - Found dead code
+  - Monitoring for code hygiene (SRP, etc.)
+  - Personally validated all changes
+  - Enhanced error handling
 
 ## Assumptions, limitations, and future improvements
 
