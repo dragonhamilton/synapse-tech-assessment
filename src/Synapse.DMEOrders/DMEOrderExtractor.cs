@@ -16,8 +16,6 @@ namespace Synapse.DMEOrders
         private const string LOG_READING = "Reading note body from file";
         private const string LOG_EXTRACTING = "Extracting device-specific order from note body";
         private const string LOG_SENDING = "Sending order to API";
-        private const string ENV_NOTE_FILE = "DME_NOTE_FILE";
-        private const string DEFAULT_NOTE_FILE = "physician_note1.txt";
         private const string LOG_FILE_NAME = "error.log";
     /// <summary>
     /// Program entry point.
@@ -42,7 +40,7 @@ namespace Synapse.DMEOrders
                 Log.Information(LOG_READING);
                 FileReader fileReader = new FileReader(Log.Logger);
                 // Load from appsettings.json; fallback to DEFAULT_NOTE_FILE if missing
-                string notePath = DEFAULT_NOTE_FILE;
+                string notePath = string.Empty;
                 var settingsPath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
                 if (File.Exists(settingsPath))
                 {
