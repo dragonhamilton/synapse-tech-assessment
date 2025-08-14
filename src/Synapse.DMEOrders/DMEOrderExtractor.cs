@@ -7,7 +7,8 @@ using System.Text.Json;
 namespace Synapse.DMEOrders
 {
     /// <summary>
-    /// Extracts order info from physician note and sends it to the API.
+    /// Console entry point: reads physician note content, extracts a structured order
+    /// via device-specific extractors, and optionally sends it to the configured API.
     /// </summary>
     class DMEOrderExtractor
     {
@@ -18,7 +19,16 @@ namespace Synapse.DMEOrders
         private const string ENV_NOTE_FILE = "DME_NOTE_FILE";
         private const string DEFAULT_NOTE_FILE = "physician_note1.txt";
         private const string LOG_FILE_NAME = "error.log";
-        static int Main(string[] args)
+    /// <summary>
+    /// Program entry point.
+    /// - Configures logging
+    /// - Loads note file path from appsettings.json
+    /// - Parses note content and selects an extractor
+    /// - Sends the structured order if sending is enabled
+    /// </summary>
+    /// <param name="args">Command-line arguments (unused).</param>
+    /// <returns>0 on success; 1 on error.</returns>
+    static int Main(string[] args)
         {
             // Configure Serilog
             Log.Logger = new LoggerConfiguration()

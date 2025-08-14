@@ -3,6 +3,10 @@ using Serilog;
 
 namespace Synapse.DMEOrders
 {
+    /// <summary>
+    /// Extractor for CPAP device orders.
+    /// Determines mask type and add-ons from diagnosis and recommendation text.
+    /// </summary>
     public class OrderExtractorCPAP : OrderExtractorBase
     {
         private const string FULL_FACE_MASK = "Full face mask";
@@ -15,6 +19,10 @@ namespace Synapse.DMEOrders
         private const string SENTENCE_JOIN = ". ";
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Creates a new CPAP order extractor.
+        /// </summary>
+        /// <param name="logger">Logger instance.</param>
         public OrderExtractorCPAP(ILogger logger)
         {
             DEVICE_NAME = "CPAP";
@@ -23,6 +31,11 @@ namespace Synapse.DMEOrders
             _logger = logger;
         }
 
+        /// <summary>
+        /// Builds the CPAP order JSON from parsed note values.
+        /// </summary>
+        /// <param name="noteValues">Parsed key/value pairs from the note.</param>
+        /// <returns>Structured order JSON.</returns>
         public override JObject Extract(Dictionary<string, string> noteValues)
         {
             _logger.Information($"Extracting {DEVICE_NAME} order info");

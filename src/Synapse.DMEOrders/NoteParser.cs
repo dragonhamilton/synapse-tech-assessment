@@ -6,17 +6,31 @@ using System.Text.Json;
 
 namespace Synapse.DMEOrders
 {
+    /// <summary>
+    /// Parses a physician note body into key/value pairs.
+    /// Tries JSON (expects a top-level "data" field) first, then falls back to plain text lines.
+    /// </summary>
     public class NoteParser
     {
         private readonly ILogger _logger;
 
         private const string JSON_DATA_FIELD = "data";
 
-        public NoteParser(ILogger logger)
+    /// <summary>
+    /// Creates a new <see cref="NoteParser"/>.
+    /// </summary>
+    /// <param name="logger">The Serilog logger.</param>
+    public NoteParser(ILogger logger)
         {
             _logger = logger;
         }
-        public Dictionary<string, string> ParseNoteToDictionary(string noteBody)
+    /// <summary>
+    /// Parses the provided note body into a dictionary of key/value pairs.
+    /// Attempts JSON parsing first; if that fails, falls back to plain text parsing.
+    /// </summary>
+    /// <param name="noteBody">The physician note body (JSON or plain text).</param>
+    /// <returns>Dictionary of parsed key/value pairs (case-insensitive keys). Empty if no data found.</returns>
+    public Dictionary<string, string> ParseNoteToDictionary(string noteBody)
         {
             string[] lines = Array.Empty<string>();
             try
@@ -30,14 +44,8 @@ namespace Synapse.DMEOrders
             // If empty, try plain text
             if (lines.Length == 0)
             {
-                try
-                {
-                    lines = ParsePlainTextNote(noteBody);
-                }
-                catch (JsonException ex)
-                {
-                    _logger.Information($"Note body is not valid text: {ex.Message}.");
-                }
+                // Plain text parsing is not expected to throw JsonException
+                lines = ParsePlainTextNote(noteBody);
             }
             // If still empty, log and return empty dictionary
             if (lines.Length == 0)
@@ -62,10 +70,10 @@ namespace Synapse.DMEOrders
         }
 
         /// <summary>
-        /// Parses a JSON physician note body: splits the 'data' field into lines, and parses key/value pairs from those lines.
+        /// Parses a JSON physician note body: splits the 'data' field into lines.
         /// </summary>
         /// <param name="noteBody">The JSON physician note body</param>
-        /// <returns>Dictionary of key/value pairs</returns>
+        /// <returns>Array of lines extracted from the data field.</returns>
         private string[] ParseJsonNote(string noteBody)
         {
             System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(noteBody);
@@ -87,7 +95,12 @@ namespace Synapse.DMEOrders
             }
         }
 
-        private  Dictionary<string, string> ParseLinesToDictionary(IEnumerable<string> lines)
+        /// <summary>
+        /// Converts lines in the format "key: value" to a case-insensitive dictionary.
+        /// </summary>
+        /// <param name="lines">Lines of text.</param>
+        /// <returns>Dictionary of key/value pairs.</returns>
+        private Dictionary<string, string> ParseLinesToDictionary(IEnumerable<string> lines)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (string line in lines)

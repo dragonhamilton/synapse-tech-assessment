@@ -1,11 +1,19 @@
 using System;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace Synapse.DMEOrders
 {
+    /// <summary>
+    /// Base class for device-specific order extractors.
+    /// Provides common constants, state, and a capability check.
+    /// </summary>
     public abstract class OrderExtractorBase
     {
+        /// <summary>
+        /// Extracts a structured JSON order from parsed note values.
+        /// </summary>
+        /// <param name="noteValues">Parsed key/value pairs from the physician note.</param>
+        /// <returns>Structured JSON order payload.</returns>
         public abstract JObject Extract(Dictionary<string, string> noteValues);
         protected const string UNKNOWN = "Unknown";
         protected string DEVICE_NAME = UNKNOWN;
@@ -17,39 +25,20 @@ namespace Synapse.DMEOrders
         protected const string PROP_PATIENT_NAME = "patient name";
         protected const string PROP_DOB = "dob";
 
-        protected string _noteBody = String.Empty;
-
         protected string Diagnosis = UNKNOWN;
         protected string Prescription = UNKNOWN;
         protected string OrderingPhysician = UNKNOWN;
         protected string PatientName = UNKNOWN;
         protected string DOB = UNKNOWN;
 
+        /// <summary>
+        /// Indicates whether this extractor can handle the note based on the device code.
+        /// </summary>
+        /// <param name="noteBody">The raw physician note body.</param>
+        /// <returns>True if the extractor can handle the note, otherwise false.</returns>
         public bool CanHandle(string noteBody)
         {
-            bool canHandle = noteBody.Contains(DEVICE_CODE, System.StringComparison.OrdinalIgnoreCase);
-            if (canHandle)
-            {
-                _noteBody = noteBody;
-            }
-            return canHandle;
-        }
-
-        protected Dictionary<string, string> ParseNoteToDictionary(string noteBody)
-        {
-            var dict = new Dictionary<string, string>();
-            var lines = noteBody.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
-            {
-                var parts = line.Split(new[] { ':' }, 2);
-                if (parts.Length == 2)
-                {
-                    var key = parts[0].Trim().ToLower().Replace(" ", "_");
-                    var value = parts[1].Trim();
-                    dict[key] = value;
-                }
-            }
-            return dict;
+            return noteBody.Contains(DEVICE_CODE, System.StringComparison.OrdinalIgnoreCase);
         }
     }
 }

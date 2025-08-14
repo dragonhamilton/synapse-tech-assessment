@@ -3,10 +3,18 @@ using Serilog;
 
 namespace Synapse.DMEOrders
 {
+    /// <summary>
+    /// Extractor for Wheelchair device orders.
+    /// Produces a minimal order payload with standard patient and diagnosis fields.
+    /// </summary>
     public class OrderExtractorWheelchair : OrderExtractorBase
     {
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Creates a new Wheelchair order extractor.
+        /// </summary>
+        /// <param name="logger">Logger instance.</param>
         public OrderExtractorWheelchair(ILogger logger)
         {
             DEVICE_NAME = "Wheelchair";
@@ -15,7 +23,11 @@ namespace Synapse.DMEOrders
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Builds the Wheelchair order JSON from parsed note values.
+        /// </summary>
+        /// <param name="noteValues">Parsed key/value pairs from the note.</param>
+        /// <returns>Structured order JSON.</returns>
         public override JObject Extract(Dictionary<string, string> noteValues)
         {
             Diagnosis = noteValues.ContainsKey(PROP_DIAGNOSIS) ? noteValues[PROP_DIAGNOSIS] : UNKNOWN;

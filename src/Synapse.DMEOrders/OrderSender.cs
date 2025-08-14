@@ -6,6 +6,11 @@ using System.IO;
 
 namespace Synapse.DMEOrders
 {
+    /// <summary>
+    /// Sends the structured DME order JSON payload to the configured HTTP API.
+    /// Reads configuration (ApiUrl, SendOrders) from appsettings.json, logs all activity,
+    /// and applies basic timeout and error handling.
+    /// </summary>
     public class OrderSender
     {
         private readonly ILogger _logger;
@@ -19,20 +24,21 @@ namespace Synapse.DMEOrders
         private const string LOG_SKIPPING = "Skipping API call to API at {Url}: {Json} (SendOrders disabled)";
         private const int HTTP_TIMEOUT_SECONDS = 10;
 
+        /// <summary>
+        /// Creates a new <see cref="OrderSender"/> with the provided logger.
+        /// </summary>
+        /// <param name="logger">The Serilog logger instance.</param>
         public OrderSender(ILogger logger)
         {
             _logger = logger;
         }
 
-        // Backward-compatible overload: ignore parameters and use current env/const-based config
-        public OrderSender(ILogger logger, string apiUrl, int timeoutSeconds, bool sendOrders)
-        {
-            _logger = logger;
-            // This overload is retained for compatibility with previous signatures.
-            // Current implementation uses ENDPOINT_URL constant, HTTP_TIMEOUT_SECONDS, and SEND_ORDERS env flag.
-            // You can wire these values in if/when the app fully moves to file-based config.
-        }
-
+        /// <summary>
+        /// Sends the provided JSON payload to the configured API endpoint.
+        /// Honors the SendOrders flag in appsettings.json. When disabled, logs and returns without sending.
+        /// </summary>
+        /// <param name="json">The JSON string to POST.</param>
+        /// <exception cref="Exception">Thrown if configuration cannot be read or on HTTP failures/timeouts.</exception>
         public void Send(string json)
         {
             var url = "";
